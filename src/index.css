@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --bg-0: #08131d;
+  --bg-1: #102435;
+  --bg-2: #1a3850;
+  --panel: rgba(9, 20, 31, 0.82);
+  --panel-strong: rgba(13, 28, 42, 0.94);
+  --line: rgba(143, 190, 201, 0.2);
+  --text: #ecf8f8;
+  --muted: #98b7bd;
+  --accent: #f0c96e;
+  --water-a: #18567d;
+  --water-b: #2e8dc4;
+  --grass-a: #386b3d;
+  --grass-b: #5ea06b;
+  --sand-a: #b9925c;
+  --sand-b: #dfc08f;
+  --path-a: #576675;
+  --path-b: #94a8b8;
+  --tree-a: #284a2c;
+  --tree-b: #3f7a4b;
+  --danger: #ff8678;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", "Avenir Next", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top, rgba(240, 201, 110, 0.08), transparent 35%),
+    linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 42%, var(--bg-0) 100%);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.game-shell {
+  min-height: 100vh;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.panel {
+  background: linear-gradient(180deg, rgba(20, 40, 58, 0.92), var(--panel));
+  border: 1px solid var(--line);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+}
+
+.tile-diamond {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.terrain-water {
+  background: linear-gradient(135deg, var(--water-a), var(--water-b));
+}
+
+.terrain-grass {
+  background: linear-gradient(135deg, var(--grass-a), var(--grass-b));
+}
+
+.terrain-sand {
+  background: linear-gradient(135deg, var(--sand-a), var(--sand-b));
+}
+
+.terrain-path {
+  background: linear-gradient(135deg, var(--path-a), var(--path-b));
+}
+
+.terrain-tree {
+  background: linear-gradient(135deg, var(--tree-a), var(--tree-b));
+}
+
+.map-board {
+  position: relative;
+  transform-origin: top left;
+  will-change: transform;
+}
+
+.iso-viewport {
+  position: relative;
+  overflow: hidden;
+  height: 760px;
+  cursor: grab;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 28%),
+    linear-gradient(180deg, rgba(10, 19, 29, 0.92), rgba(4, 10, 16, 0.94));
+}
+
+.iso-viewport:active {
+  cursor: grabbing;
+}
+
+.iso-tile-wrap {
+  position: absolute;
+  width: 64px;
+  height: 32px;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  transition: transform 120ms ease;
+}
+
+.iso-tile-wrap:hover {
+  transform: translateY(-2px);
+}
+
+.iso-tile-surface {
+  position: relative;
+  width: 64px;
+  height: 32px;
+  z-index: 1;
+}
+
+.tree-canopy {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  width: 36px;
+  height: 36px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3));
+  z-index: 2;
+}
+
+.structure-marker {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  width: 36px;
+  height: 36px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.14), rgba(0, 0, 0, 0.08));
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+}
+
+.structure-marker-dock {
+  border-radius: 12px 12px 8px 8px;
+  background: radial-gradient(circle at top, rgba(123, 190, 227, 0.28), rgba(55, 89, 127, 0.18));
+}
+
+.structure-marker-utility {
+  border-radius: 8px;
+  background: radial-gradient(circle at top, rgba(126, 214, 225, 0.3), rgba(56, 116, 131, 0.16));
+}
+
+.structure-marker-leisure {
+  border-radius: 50%;
+  background: radial-gradient(circle at top, rgba(255, 184, 109, 0.3), rgba(148, 82, 33, 0.18));
+}
+
+.structure-marker-commerce {
+  border-radius: 10px 10px 16px 16px;
+  background: radial-gradient(circle at top, rgba(240, 205, 110, 0.32), rgba(122, 83, 27, 0.18));
+}
+
+.badge-svg {
+  width: 28px;
+  height: 28px;
+  overflow: visible;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+}
+
+.boater-chip {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 2px solid rgba(6, 15, 21, 0.8);
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(240, 201, 110, 0.14);
+  z-index: 4;
+}
+
+.tile-overlay {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 220px;
+  padding: 14px 16px;
+  z-index: 12;
+}
+
+.stat-card {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.soft-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.soft-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.soft-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
