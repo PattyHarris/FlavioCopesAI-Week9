@@ -3,25 +3,38 @@ import type { TerrainType, Tile } from "../types/game";
 
 export function createInitialMap(): Tile[] {
   const tiles: Tile[] = [];
+  const lakeTiles = new Set([
+    "0:0", "1:0", "2:0", "3:0", "4:0", "5:0", "6:0",
+    "0:1", "1:1", "2:1", "3:1", "4:1", "5:1", "6:1",
+    "0:2", "1:2", "2:2", "3:2", "4:2", "5:2", "6:2",
+    "0:3", "1:3", "2:3", "3:3", "4:3", "5:3",
+    "0:4", "1:4", "2:4", "3:4", "4:4", "5:4",
+    "0:5", "1:5", "2:5", "3:5", "4:5",
+    "0:6", "1:6", "2:6", "3:6",
+    "0:7", "1:7", "2:7",
+    "1:8",
+    "6:3", "6:4", "5:5", "4:6", "3:7", "2:8",
+  ]);
+  const shorelineTiles = new Set([
+    "7:0", "7:1", "7:2", "6:5", "5:6", "4:7", "3:8", "2:9", "1:9", "0:8",
+    "6:6", "5:7", "4:8", "3:9", "2:10",
+    "5:8", "4:9", "3:10",
+    "6:7", "7:3", "7:4", "7:5", "6:8",
+  ]);
 
   for (let y = 0; y < MAP_SIZE; y += 1) {
     for (let x = 0; x < MAP_SIZE; x += 1) {
       let terrain: TerrainType = "grass";
+      const key = `${x}:${y}`;
       const edgeTree =
         (x === 0 || y === 0 || x === MAP_SIZE - 1 || y === MAP_SIZE - 1) &&
-        !(x <= 4 && y <= 4);
-      const lakeCorner = (x <= 4 && y <= 4) || (x <= 2 && y === 5) || (y <= 2 && x === 5);
-      const shoreline =
-        !lakeCorner &&
-        ((x >= 0 && x <= 5 && y >= 0 && y <= 5 && (x === 5 || y === 5)) ||
-          (x === 3 && y === 6) ||
-          (x === 6 && y === 3));
+        !lakeTiles.has(key);
       const centerPath = x === 7 || x === 8 || y === 7 || y === 8;
       const pathBranches = (x >= 5 && x <= 10 && y === 10) || (y >= 5 && y <= 10 && x === 10);
 
-      if (lakeCorner) {
+      if (lakeTiles.has(key)) {
         terrain = "water";
-      } else if (shoreline) {
+      } else if (shorelineTiles.has(key)) {
         terrain = "sand";
       } else if (centerPath || pathBranches) {
         terrain = "path";

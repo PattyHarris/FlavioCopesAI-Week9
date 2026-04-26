@@ -235,6 +235,8 @@ As the codebase is built out, this structure should fit the current brief well:
 - Synced dock occupancy directly from staying boaters so occupancy, boater markers, and nightly revenue stay consistent, and improved scroll behavior for diagnostics, chatter, and reviews
 - Added a store-level time-advance guard and monotonic clock merge so late async ticks cannot rewind the visible in-game day/hour display
 - Replaced the map with a true isometric 64x32 diamond projection, added click-and-drag panning, mouse-wheel zoom from `0.5x` to `3x`, richer terrain layout, and an in-map selected tile detail overlay
+- Expanded the isometric lake footprint and shoreline sand so the harbor water area occupies more of the map and feels better proportioned against the buildable land
+- Reshaped the enlarged lake into a more organic inlet with a less blocky shoreline so the harbor corner reads more naturally in the isometric view
 - Swapped map labels for more playful icon-based structure and terrain markers so trees and facilities read visually without text clutter
 - Refined map interaction so left click is reserved for select/place, right-drag pans the isometric board, wheel zoom anchors to the cursor, and a `Reset View` control plus on-screen interaction hints keep navigation understandable
 - Replaced emoji markers with custom inline SVG-style badges and added category-specific frame shapes so docks, utilities, leisure buildings, and commerce read more clearly at a glance
